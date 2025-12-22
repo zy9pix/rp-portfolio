@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --foreground-rgb: 229, 229, 229;
+    --background-start-rgb: 10, 10, 10;
+    --background-end-rgb: 10, 10, 10;
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-start-rgb));
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom Scrollbar for Industrial Look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #bd93f9;
+}
