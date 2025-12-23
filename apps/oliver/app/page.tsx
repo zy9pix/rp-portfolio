@@ -1,25 +1,16 @@
 import { Button } from "@repo/ui";
 import { ProjectCard } from "@/components/project-card";
+import { db } from "@repo/database";
+import Link from "next/link";
 
-const PROJECTS = [
-    {
-        title: "Proje: PokeClicker",
-        description: "Retro estetiğe sahip nostaljik artımlı oyun motoru. Veri için PokeAPI'ye bağlandı.",
-        tags: ["React", "PokeAPI", "OyunGeliştirme"],
-    },
-    {
-        title: "Vortex_Sistemleri",
-        description: "[GİZLENMİŞ] Yüksek hacimli veri görselleştirmesi için kurumsal panel.",
-        tags: ["Next.js", "D3.js", "WebSocket"],
-    },
-    {
-        title: "Legacy_Term",
-        description: "Uzak sunucularla WebSocket üzerinden etkileşim kurmak için tarayıcı tabanlı terminal emülatörü.",
-        tags: ["TypeScript", "Xterm.js", "Node"],
-    }
-];
+export const revalidate = 0; // Disable caching for demo purposes
 
-export default function Page() {
+export default async function Page() {
+    const projects = await db.query.projects.findMany({
+        where: (projects, { eq }) => eq(projects.owner, 'oliver'),
+        orderBy: (projects, { desc }) => [desc(projects.createdAt)],
+    });
+
     return (
         <main className="flex min-h-screen flex-col items-center p-8 lg:p-24">
             {/* Hero Section */}
@@ -34,12 +25,11 @@ export default function Page() {
                         <span className="text-[#ff4d4d]">Retro-modern arayüzler</span> ve yüksek performanslı sistemler konusunda uzmanlaşmış bağımsız geliştirici.
                     </p>
                     <div className="flex gap-4">
-                        <Button className="bg-[#ff4d4d] hover:bg-red-600 rounded-none border border-red-400 text-black font-bold px-8">
-                            PROJELERİ_GÖR
-                        </Button>
-                        <Button className="bg-transparent hover:bg-[#ff4d4d]/10 rounded-none border border-[#ff4d4d] text-[#ff4d4d] font-bold px-8">
-                            İLETİŞİM
-                        </Button>
+                        <Link href="https://facebrowser-tr.gta.world/olivereave" target="_blank">
+                            <Button className="bg-[#ff4d4d] hover:bg-red-600 rounded-none border border-red-400 text-black font-bold px-8">
+                                İLETİŞİM
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -55,8 +45,8 @@ export default function Page() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {PROJECTS.map((project) => (
-                        <ProjectCard key={project.title} project={project} />
+                    {projects.map((project) => (
+                        <ProjectCard key={project.id} project={project} />
                     ))}
                 </div>
             </div>

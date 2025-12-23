@@ -26,29 +26,35 @@ export function CommandPalette() {
                     <div className="flex items-center border-b border-[#333] px-3">
                         <Search className="w-4 h-4 text-[#666] mr-2" />
                         <Command.Input
-                            placeholder="Type a command or search..."
+                            autoFocus
+                            placeholder="Komut yazın veya arayın..."
                             className="w-full bg-transparent p-3 outline-none placeholder:text-[#444] text-sm"
                         />
                     </div>
                     <Command.List className="p-2 max-h-64 overflow-y-auto">
-                        <Command.Empty className="p-4 text-xs text-[#666]">No results found.</Command.Empty>
-                        <Command.Group heading="Navigation" className="text-xs text-[#666] mb-2 uppercase tracking-wider font-bold p-1">
+                        <Command.Empty className="p-4 text-xs text-[#666]">Sonuç bulunamadı.</Command.Empty>
+                        <Command.Group heading="Navigasyon" className="text-xs text-[#666] mb-2 uppercase tracking-wider font-bold p-1">
                             <Command.Item className="p-2 hover:bg-[#bd93f9]/10 hover:text-[#bd93f9] cursor-pointer transition-colors flex items-center gap-2 text-sm rounded-sm aria-selected:bg-[#bd93f9]/20 aria-selected:text-[#bd93f9]">
-                                <span>GO_TO_HOME</span>
+                                <span>ANA_SAYFAYA_GİT</span>
                             </Command.Item>
                             <Command.Item className="p-2 hover:bg-[#bd93f9]/10 hover:text-[#bd93f9] cursor-pointer transition-colors flex items-center gap-2 text-sm rounded-sm aria-selected:bg-[#bd93f9]/20 aria-selected:text-[#bd93f9]">
-                                <span>VIEW_PROJECTS</span>
+                                <span>PROJELERİ_GÖR</span>
                             </Command.Item>
                         </Command.Group>
-                        <Command.Group heading="System" className="text-xs text-[#666] mb-2 uppercase tracking-wider font-bold p-1">
+                        <Command.Group heading="Sistem" className="text-xs text-[#666] mb-2 uppercase tracking-wider font-bold p-1">
+                            <Command.Item
+                                onSelect={() => window.location.href = '/admin'}
+                                className="p-2 hover:bg-[#bd93f9]/10 hover:text-[#bd93f9] cursor-pointer transition-colors flex items-center gap-2 text-sm rounded-sm aria-selected:bg-[#bd93f9]/20 aria-selected:text-[#bd93f9]">
+                                <span>GİRİŞ_YAP (ADMIN)</span>
+                            </Command.Item>
                             <Command.Item className="p-2 hover:bg-[#bd93f9]/10 hover:text-[#bd93f9] cursor-pointer transition-colors flex items-center gap-2 text-sm rounded-sm aria-selected:bg-[#bd93f9]/20 aria-selected:text-[#bd93f9]">
-                                <span>THEME_TOGGLE</span>
+                                <span>TEMA_DEĞİŞTİR</span>
                             </Command.Item>
                         </Command.Group>
                     </Command.List>
                 </Command>
                 <div className="text-[10px] text-[#444] p-2 border-t border-[#333] flex justify-between uppercase">
-                    <span>CMD+K to close</span>
+                    <span>Kapatmak için CMD+K</span>
                     <span>System v2.4.0</span>
                 </div>
             </div>

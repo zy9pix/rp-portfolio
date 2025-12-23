@@ -1,10 +1,13 @@
-import { createBrowserClient } from '@supabase/ssr'
-import { Database } from './types'
+import 'server-only';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import * as schema from "./schema";
 
-export const createClient = () => {
-    return createBrowserClient<Database>(
-        process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder'
-    )
+if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL is not defined");
 }
-export * from './types';
+
+const sql = neon(process.env.DATABASE_URL);
+export const db = drizzle(sql, { schema });
+export * from "./schema";
+export { eq, desc, and } from "drizzle-orm";

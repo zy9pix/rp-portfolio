@@ -21,7 +21,7 @@ export function PokedexWidget() {
             .catch((err) => console.error(err));
     }, []);
 
-    if (!pokemon) return <div className="animate-pulse text-[#ff4d4d] font-mono text-xs">LOADING_DATA...</div>;
+    if (!pokemon) return <div className="animate-pulse text-[#ff4d4d] font-mono text-xs">VERİ_YÜKLENİYOR...</div>;
 
     return (
         <div className="fixed bottom-8 right-8 w-64 border-2 border-[#ff4d4d] bg-black p-4 font-mono hidden lg:block shadow-[4px_4px_0px_0px_rgba(255,77,77,0.5)]">

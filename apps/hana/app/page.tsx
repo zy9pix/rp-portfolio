@@ -1,7 +1,16 @@
 import { Button } from "@repo/ui";
 import { ProjectList } from "@/components/project-list";
+import { db } from "@repo/database";
+import Link from "next/link";
 
-export default function Page() {
+export const revalidate = 0;
+
+export default async function Page() {
+    const projects = await db.query.projects.findMany({
+        where: (projects, { eq }) => eq(projects.owner, 'hana'),
+        orderBy: (projects, { desc }) => [desc(projects.createdAt)],
+    });
+
     return (
         <main className="min-h-screen bg-[#0a0a0a] text-[#e5e5e5] p-8 lg:p-24 selection:bg-[#bd93f9] selection:text-black">
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
@@ -22,14 +31,12 @@ export default function Page() {
 
                         <div className="flex flex-col gap-4 items-start">
                             <span className="text-[10px] text-[#444] font-mono uppercase">Hızlı İşlemler</span>
-                            <Button className="w-full justify-between bg-white/5 hover:bg-white/10 border border-[#333] text-[#e5e5e5] rounded-none text-xs font-mono py-6">
-                                <span>ÖZGEÇMİŞ_İNDİR</span>
-                                <span>↓</span>
-                            </Button>
-                            <Button className="w-full justify-between bg-white/5 hover:bg-white/10 border border-[#333] text-[#e5e5e5] rounded-none text-xs font-mono py-6">
-                                <span>ŞİFRELİ_EPOSTA</span>
-                                <span>@</span>
-                            </Button>
+                            <Link href="https://facebrowser-tr.gta.world/hana" target="_blank" className="w-full">
+                                <Button className="w-full justify-between bg-white/5 hover:bg-white/10 border border-[#333] text-[#e5e5e5] rounded-none text-xs font-mono py-6">
+                                    <span>İLETİŞİM</span>
+                                    <span>@</span>
+                                </Button>
+                            </Link>
                         </div>
                     </div>
 
@@ -41,7 +48,7 @@ export default function Page() {
 
                 {/* content */}
                 <div className="lg:col-span-8 flex flex-col justify-center">
-                    <ProjectList />
+                    <ProjectList projects={projects} />
                 </div>
             </div>
         </main>
