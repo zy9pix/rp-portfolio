@@ -7,11 +7,14 @@ export async function loginAction(formData: FormData) {
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
 
-    // Hardcoded credentials for MVP
-    if (username === "root" && password === "1234") {
+    // Environment variable credentials
+    const validUsername = process.env.ADMIN_USERNAME;
+    const validPassword = process.env.ADMIN_PASSWORD;
+
+    if (validUsername && validPassword && username === validUsername && password === validPassword) {
         cookies().set("admin_session", "oliver_token", {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: true,
             maxAge: 60 * 60 * 24, // 1 day
             path: "/",
         });

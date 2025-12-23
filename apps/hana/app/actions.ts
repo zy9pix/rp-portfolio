@@ -7,11 +7,14 @@ export async function loginAction(formData: FormData) {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    // Hardcoded credentials for MVP
-    if (email === "admin@sterling.dev" && password === "1234") {
+    // Environment variable credentials
+    const validEmail = process.env.ADMIN_EMAIL;
+    const validPassword = process.env.ADMIN_PASSWORD;
+
+    if (validEmail && validPassword && email === validEmail && password === validPassword) {
         cookies().set("admin_session", "hana_token", {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: true,
             maxAge: 60 * 60 * 24, // 1 day
             path: "/",
         });
